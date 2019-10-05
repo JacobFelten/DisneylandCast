@@ -20,10 +20,19 @@ namespace DisneylandCast.Controllers
             return View();
         }
 
+        //[HttpGet]
         public ViewResult Messaging()
         {
             return View();
         }
+
+        /*
+        [HttpPost]
+        public ViewResult Messaging()
+        {
+            return View();
+        }
+        */
 
         public ViewResult About()
         {
