@@ -10,20 +10,34 @@ namespace DisneylandCast.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public ViewResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public ViewResult History()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public ViewResult Messaging()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
+        }
+
+        public ViewResult About()
+        {
+            return View();
+        }
+
+        public ViewResult Locations()
+        {
+            return View();
+        }
+
+        public ViewResult People()
+        {
+            return View();
         }
     }
 }

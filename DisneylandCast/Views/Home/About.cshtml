@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     Layout = null;
 }
 
@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Home</title>
+    <title>About</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 </head>
 <body>
@@ -19,12 +19,18 @@
             <li class="nav-item"><a class="nav-link text-light" asp-action="About">About</a></li>
         </ul>
     </nav>
-    <div class="jumbotron text-center">
-        <h1>The cast of Disneyland</h1>
-        <h5>A site for theme park employees</h5>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-light btn-block" asp-action="Locations">Notable locations around the park</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-light btn-block" asp-action="People">Cast member hall of fame</a>
+            </div>
+        </div>
     </div>
     <p>
-        TODO: Add general site info here.
+        TODO: Add info about the cast members of Disneyland
     </p>
 </body>
 </html>
