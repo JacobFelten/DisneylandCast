@@ -20,19 +20,38 @@ namespace DisneylandCast.Controllers
             return View();
         }
 
-        //[HttpGet]
+        [HttpGet]
         public ViewResult Messaging()
         {
+            if (Userbase.Users.Count == 0)
+                Userbase.Users.Add(new User() { Name = "Me" });
+            return View();
+        }
+        
+        [HttpPost]
+        public ViewResult Messaging(Message message)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (User u in Userbase.Users)
+                {
+                    if (message.Sender == u.Name)
+                    {
+                        u.SentMessages.Add(message);
+                    }
+                    if (message.Receiver == u.Name)
+                    {
+                        u.ReceivedMessages.Add(message);
+                    }
+                }
+            }
             return View();
         }
 
-        /*
-        [HttpPost]
-        public ViewResult Messaging()
+        public ViewResult MessageList()
         {
-            return View();
+            return View("MessageList", Userbase.Users[0]);
         }
-        */
 
         public ViewResult About()
         {

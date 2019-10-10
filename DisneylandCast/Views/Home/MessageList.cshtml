@@ -1,0 +1,75 @@
+﻿@model DisneylandCast.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Messaging</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-info">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link text-light" asp-action="Messaging"><<< Back</a></li>
+        </ul>
+    </nav>
+    <h2 class="text-center">@Model.Name's Messages</h2>
+    <div class="row">
+        <div class="card container bg-light col-6">
+            <div class="card-header">
+                <h3 class="text-center">Received Messages</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.ReceivedMessages.Count == 0)
+                {
+                    <h4 class="text-center">You haven't recieved any messages.</h4>
+                }
+                else
+                {
+                    foreach (Message m in Model.ReceivedMessages)
+                    {
+                        <div class="card container">
+                            <div class="card-header">
+                                From: @m.Sender
+                            </div>
+                            <div class="card-body">
+                                @m.MessageText
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="card container bg-light col-6">
+            <div class="card-header">
+                <h3 class="text-center">Sent Messages</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.SentMessages.Count == 0)
+                {
+                    <h4 class="text-center">You haven't sent any messages.</h4>
+                }
+                else
+                {
+                    foreach (Message m in Model.SentMessages)
+                    {
+                        <div class="card container">
+                            <div class="card-header">
+                                To: @m.Receiver
+                            </div>
+                            <div class="card-body">
+                                @m.MessageText
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
