@@ -24,11 +24,6 @@
     <div class="card container">
         <div class="card-header bg-light">
             Use this page to send a message to another site user.
-            <p>
-                This site currently only has one user named "Me".
-                 The messaging works as long as the either the sender or receiver is "Me".
-                 The other name can be whatever you want.
-            </p>
         </div>
         <div class="card-body">
             <form asp-action="Messaging" method="post">
@@ -59,7 +54,7 @@
                     <button class="btn btn-primary" type="submit">Send</button>
                 </div>
             </form>
-            <a class="btn btn-secondary float-right" asp-action="MessageList">Your Messages</a>
+            <a class="btn btn-secondary float-right" asp-action="ChooseUser">View Messages</a>
         </div>
     </div>
 </body>
