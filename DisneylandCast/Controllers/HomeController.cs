@@ -79,7 +79,7 @@ namespace DisneylandCast.Controllers
 
         //Returns true if a user already exists in the Userbase. If not, this method
         //creates a new user with the username parameter and returns false.
-        public bool LookForUser(string username)
+        private bool LookForUser(string username)
         {
             User user = null;
             foreach (User u in Userbase.Users)
@@ -98,7 +98,7 @@ namespace DisneylandCast.Controllers
         }
 
         //Finds and returns a user from Userbase by its name.
-        public User GetUser(string username)
+        private User GetUser(string username)
         {
             foreach (User u in Userbase.Users)
             {
