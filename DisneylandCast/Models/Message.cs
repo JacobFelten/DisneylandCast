@@ -10,6 +10,7 @@ namespace DisneylandCast.Models
     {
         private int messageId;
         private bool sent;
+        private DateTime time;
         private string sender;
         private string receiver;
         private string messageText;
@@ -25,6 +26,12 @@ namespace DisneylandCast.Models
         {
             get { return sent; }
             set { sent = value; }
+        }
+
+        public DateTime Time
+        {
+            get { return time; }
+            set { time = value; }
         }
 
         [Required(ErrorMessage = "Please enter your username.")]

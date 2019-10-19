@@ -8,6 +8,6 @@ namespace DisneylandCast.Models
     public class Reply
     {
         public string ReplyText { get; set; }
-        public int ReplyIndex { get; set; }
+        public DateTime Time { get; set; }
     }
 }

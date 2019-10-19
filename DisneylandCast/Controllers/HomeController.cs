@@ -40,6 +40,7 @@ namespace DisneylandCast.Controllers
                 user = GetUser(message.Receiver);
                 user.ReceivedMessages.Add(message);
                 GenerateMessageId(message);
+                message.Time = DateTime.Now;
             }
             return View();
         }
@@ -56,6 +57,7 @@ namespace DisneylandCast.Controllers
             User user;
             LookForUser(username);
             user = GetUser(username);
+            SortMessagesAndReplies(user);
             return View("MessageList", user);
         }
         
@@ -70,6 +72,7 @@ namespace DisneylandCast.Controllers
         public ViewResult SendReply(string messageId, string replyText, bool overload)
         {
             Reply reply = new Reply { ReplyText = replyText };
+            reply.Time = DateTime.Now;
             Message message = GetMessage(int.Parse(messageId));
             message.Replies.Add(reply);
             User user;
@@ -77,6 +80,7 @@ namespace DisneylandCast.Controllers
                 user = GetUser(message.Sender);
             else
                 user = GetUser(message.Receiver);
+            SortMessagesAndReplies(user);
             return View("MessageList", user);
         }
 
@@ -87,12 +91,14 @@ namespace DisneylandCast.Controllers
 
         public ViewResult Locations()
         {
-            return View();
+            Repository.Locations.Sort((l1, l2) => l1.Name.CompareTo(l2.Name));
+            return View("Locations", Repository.Locations);
         }
 
         public ViewResult People()
         {
-            return View();
+            Repository.People.Sort((p1, p2) => p1.Name.CompareTo(p2.Name));
+            return View("People", Repository.People);
         }
 
         //Returns true if a user already exists in the Repository. If not, this method
@@ -157,6 +163,17 @@ namespace DisneylandCast.Controllers
                 }
                 message.MessageId = id;
             }
+        }
+
+        //Sorts all of a user's messages and replies by it's time property
+        private void SortMessagesAndReplies(User user)
+        {
+            foreach (Message m in user.AllMessages)
+            {
+                m.Replies.Sort((r1, r2) => r1.Time.CompareTo(r2.Time));
+            }
+            user.ReceivedMessages.Sort((m1, m2) => m1.Time.CompareTo(m2.Time));
+            user.SentMessages.Sort((m1, m2) => m1.Time.CompareTo(m2.Time));
         }
     }
 }
