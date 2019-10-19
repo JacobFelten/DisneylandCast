@@ -14,5 +14,18 @@ namespace DisneylandCast.Models
         public List<Message> SentMessages { get { return sentMessages; } }
         public List<Message> ReceivedMessages { get { return receivedMessages; } }
         public string Name { get; set; }
+
+        public List<Message> AllMessages
+        {
+            get
+            {
+                List<Message> all = new List<Message>();
+                foreach (Message m in sentMessages)
+                    all.Add(m);
+                foreach (Message m in receivedMessages)
+                    all.Add(m);
+                return all;
+            }
+        }
     }
 }

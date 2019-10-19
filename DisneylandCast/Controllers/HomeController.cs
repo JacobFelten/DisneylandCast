@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DisneylandCast.Models;
+using System.Web;
 
 namespace DisneylandCast.Controllers
 {
@@ -38,6 +39,7 @@ namespace DisneylandCast.Controllers
                 LookForUser(message.Receiver);
                 user = GetUser(message.Receiver);
                 user.ReceivedMessages.Add(message);
+                GenerateMessageId(message);
             }
             return View();
         }
@@ -56,10 +58,26 @@ namespace DisneylandCast.Controllers
             user = GetUser(username);
             return View("MessageList", user);
         }
-
-        public ViewResult MessageList()
+        
+        public ViewResult SendReply(string messageId, string sent)
         {
-            return View("MessageList", Userbase.Users[0]);
+            Message message = GetMessage(int.Parse(messageId));
+            message.Sent = bool.Parse(sent);
+            return View("SendReply", HttpUtility.HtmlDecode(messageId));
+        }
+        
+        [HttpPost]
+        public ViewResult SendReply(string messageId, string replyText, bool overload)
+        {
+            Reply reply = new Reply { ReplyText = replyText };
+            Message message = GetMessage(int.Parse(messageId));
+            message.Replies.Add(reply);
+            User user;
+            if (message.Sent)
+                user = GetUser(message.Sender);
+            else
+                user = GetUser(message.Receiver);
+            return View("MessageList", user);
         }
 
         public ViewResult About()
@@ -77,12 +95,12 @@ namespace DisneylandCast.Controllers
             return View();
         }
 
-        //Returns true if a user already exists in the Userbase. If not, this method
+        //Returns true if a user already exists in the Repository. If not, this method
         //creates a new user with the username parameter and returns false.
         private bool LookForUser(string username)
         {
             User user = null;
-            foreach (User u in Userbase.Users)
+            foreach (User u in Repository.Users)
             {
                 if (u.Name == username)
                     user = u;
@@ -90,22 +108,55 @@ namespace DisneylandCast.Controllers
             if (user == null)
             {
                 user = new User() { Name = username };
-                Userbase.Users.Add(user);
+                Repository.Users.Add(user);
                 return false;
             }
             else
                 return true;
         }
 
-        //Finds and returns a user from Userbase by its name.
+        //Finds and returns a user from Repository by its name.
         private User GetUser(string username)
         {
-            foreach (User u in Userbase.Users)
+            foreach (User u in Repository.Users)
             {
                 if (u.Name == username)
                     return u;
             }
             return null;
+        }
+
+        //Finds and returns a message from the users in the Repository by its id.
+        private Message GetMessage(int id)
+        {
+            foreach (User u in Repository.Users)
+            {
+                foreach (Message m in u.AllMessages)
+                {
+                    if (m.MessageId == id)
+                        return m;
+                }
+            }
+            return null;
+        }
+
+        //Generates a unique id int for the messageID property of the
+        //message parameter if it doesn't alread have one
+        private void GenerateMessageId(Message message)
+        {
+            if (message.MessageId == 0)
+            {
+                int id = 0;
+                foreach (User u in Repository.Users)
+                {
+                    foreach (Message m in u.AllMessages)
+                    {
+                        if (m.MessageId == id)
+                            id++;
+                    }
+                }
+                message.MessageId = id;
+            }
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿@model String
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Send Reply</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-info">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link text-light" asp-action="MessageList"><<< Back</a></li>
+        </ul>
+    </nav>
+    <div class="card container text-center">
+        <form method="post">
+            <label for="replyText">Type your reply</label>
+            <input class="form-control" name="replyText"/>
+            <input class="btn btn-primary" type="submit" value="Send Reply" />
+        </form>
+    </div>
+</body>
+</html>

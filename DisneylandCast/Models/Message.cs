@@ -8,9 +8,24 @@ namespace DisneylandCast.Models
 {
     public class Message
     {
+        private int messageId;
+        private bool sent;
         private string sender;
         private string receiver;
         private string messageText;
+        private List<Reply> replies = new List<Reply>();
+
+        public int MessageId
+        {
+            get { return messageId; }
+            set { messageId = value; }
+        }
+
+        public bool Sent
+        {
+            get { return sent; }
+            set { sent = value; }
+        }
 
         [Required(ErrorMessage = "Please enter your username.")]
         public string Sender
@@ -30,5 +45,7 @@ namespace DisneylandCast.Models
             get { return messageText; }
             set { messageText = value; }
         }
+
+        public List<Reply> Replies { get { return replies; } }
     }
 }

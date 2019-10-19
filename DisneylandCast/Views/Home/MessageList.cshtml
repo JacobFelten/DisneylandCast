@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-info">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link text-light" asp-action="Messaging"><<< Back</a></li>
+            <li class="nav-item"><a class="nav-link text-light" asp-action="ChooseUser"><<< Back</a></li>
         </ul>
     </nav>
     <h2 class="text-center">@Model.Name's Messages</h2>
@@ -40,6 +40,29 @@
                             <div class="card-body">
                                 @m.MessageText
                             </div>
+                            <div class="card-footer bg-light">
+                                @for (int i = 0; i < m.Replies.Count; i++)
+                                {
+                                    <div class="card container">
+                                        <div class="card-header">
+                                            @{
+                                                string rNum = "";
+                                                for (int j = 0; j <= i; j++)
+                                                {
+                                                    rNum += "RE:";
+                                                }
+                                            }
+                                            @rNum@m.Sender
+                                        </div>
+                                        <div class="card-body">
+                                            @m.Replies[i].ReplyText
+                                        </div>
+                                    </div>
+                                }
+                                <a class="btn btn-sm btn-primary" asp-action="SendReply"
+                                   asp-route-messageId="@m.MessageId.ToString()"
+                                   asp-route-sent="false">Reply</a>
+                            </div>
                         </div>
                     }
                 }
@@ -58,14 +81,42 @@
                 {
                     foreach (Message m in Model.SentMessages)
                     {
-                        <div class="card container">
-                            <div class="card-header">
-                                To: @m.Receiver
-                            </div>
-                            <div class="card-body">
-                                @m.MessageText
-                            </div>
+                    <div class="card container">
+                        <div class="card-header">
+                            To: @m.Receiver
                         </div>
+                        <div class="card-body">
+                            @m.MessageText
+                        </div>
+                        <div class="card-footer bg-light">
+                            @for (int i = 0; i < m.Replies.Count; i++)
+                            {
+                                <div class="card container">
+                                    <div class="card-header">
+                                        @{ 
+                                                string rNum = "";
+                                                for (int j = 0; j <= i; j++)
+                                                {
+                                                    rNum += "RE:";
+                                                }
+                                            }
+                                        @rNum@m.Sender
+                                    </div>
+                                    <div class="card-body">
+                                        @m.Replies[i].ReplyText
+                                    </div>
+                                    <div class="card-footer">
+                                        @if (i == m.Replies.Count - 1)
+                                        {
+                                            <a class="btn btn-sm btn-primary" asp-action="SendReply"
+                                              asp-route-messageId="@m.MessageId.ToString()"
+                                              asp-route-sent="true">Reply</a>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
                     }
                 }
             </div>
