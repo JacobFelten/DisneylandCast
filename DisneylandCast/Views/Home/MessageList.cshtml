@@ -33,15 +33,17 @@
                 {
                     foreach (Message m in Model.ReceivedMessages)
                     {
+                        string style = "";
+                        if (m.Important) { style = "bg-danger"; }
                         <div class="card container">
-                            <div class="card-header">
+                            <div class="card-header @style">
                                 From: @m.Sender
                                 <div class="text-right">@m.Time.ToString()</div>
                             </div>
                             <div class="card-body">
                                 @m.MessageText
                             </div>
-                            <div class="card-footer bg-light">
+                            <div class="card-footer bg-white">
                                 @for (int i = 0; i < m.Replies.Count; i++)
                                 {
                                     <div class="card container">
@@ -83,44 +85,46 @@
                 {
                     foreach (Message m in Model.SentMessages)
                     {
-                    <div class="card container">
-                        <div class="card-header">
-                            To: @m.Receiver
-                            <div class="text-right">@m.Time.ToString()</div>
-                        </div>
-                        <div class="card-body">
-                            @m.MessageText
-                        </div>
-                        <div class="card-footer bg-light">
-                            @for (int i = 0; i < m.Replies.Count; i++)
-                            {
-                                <div class="card container">
-                                    <div class="card-header">
-                                        @{
-                                            string rNum = "";
-                                            for (int j = 0; j <= i; j++)
-                                            {
-                                                rNum += "RE:";
+                        string style = "";
+                        if (m.Important) { style = "bg-danger"; }
+                        <div class="card container">
+                            <div class="card-header @style">
+                                To: @m.Receiver
+                                <div class="text-right">@m.Time.ToString()</div>
+                            </div>
+                            <div class="card-body">
+                                @m.MessageText
+                            </div>
+                            <div class="card-footer bg-white">
+                                @for (int i = 0; i < m.Replies.Count; i++)
+                                {
+                                    <div class="card container">
+                                        <div class="card-header">
+                                            @{
+                                                string rNum = "";
+                                                for (int j = 0; j <= i; j++)
+                                                {
+                                                    rNum += "RE:";
+                                                }
                                             }
-                                        }
-                                        @rNum@m.Sender
-                                        <div class="text-right">@m.Replies[i].Time.ToString()</div>
+                                            @rNum@m.Sender
+                                            <div class="text-right">@m.Replies[i].Time.ToString()</div>
+                                        </div>
+                                        <div class="card-body">
+                                            @m.Replies[i].ReplyText
+                                        </div>
+                                        <div class="card-footer">
+                                            @if (i == m.Replies.Count - 1)
+                                            {
+                                                <a class="btn btn-sm btn-primary" asp-action="SendReply"
+                                                  asp-route-messageId="@m.MessageId.ToString()"
+                                                  asp-route-sent="true">Reply</a>
+                                            }
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        @m.Replies[i].ReplyText
-                                    </div>
-                                    <div class="card-footer">
-                                        @if (i == m.Replies.Count - 1)
-                                        {
-                                            <a class="btn btn-sm btn-primary" asp-action="SendReply"
-                                              asp-route-messageId="@m.MessageId.ToString()"
-                                              asp-route-sent="true">Reply</a>
-                                        }
-                                    </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
-                    </div>
                     }
                 }
             </div>

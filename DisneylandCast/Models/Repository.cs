@@ -15,6 +15,11 @@ namespace DisneylandCast.Models
         public static List<Person> People { get { return people; } }
         public static List<Location> Locations { get { return locations; } }
 
+        static Repository()
+        {
+            AddTestData();
+        }
+
         static void AddTestData()
         {
             locations.Add(new Location

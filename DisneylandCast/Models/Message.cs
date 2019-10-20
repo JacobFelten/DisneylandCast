@@ -14,6 +14,7 @@ namespace DisneylandCast.Models
         private string sender;
         private string receiver;
         private string messageText;
+        private bool important;
         private List<Reply> replies = new List<Reply>();
 
         public int MessageId
@@ -51,6 +52,12 @@ namespace DisneylandCast.Models
         {
             get { return messageText; }
             set { messageText = value; }
+        }
+
+        public bool Important
+        {
+            get { return important; }
+            set { important = value; }
         }
 
         public List<Reply> Replies { get { return replies; } }
