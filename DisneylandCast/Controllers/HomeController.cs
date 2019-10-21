@@ -152,6 +152,8 @@ namespace DisneylandCast.Controllers
         {
             if (message.MessageId == 0)
             {
+                //Below was the old logic which caused errors
+                /*
                 int id = 0;
                 foreach (User u in Repository.Users)
                 {
@@ -162,6 +164,19 @@ namespace DisneylandCast.Controllers
                     }
                 }
                 message.MessageId = id;
+                */
+
+                List<Message> allUserMessages = new List<Message>();
+                foreach (User u in Repository.Users)
+                {
+                    foreach (Message m in u.AllMessages)
+                    {
+                        if (!allUserMessages.Contains(m))
+                            allUserMessages.Add(m);
+                    }
+                }
+                allUserMessages.Sort((m1, m2) => m1.MessageId.CompareTo(m2.MessageId));
+                message.MessageId = allUserMessages[allUserMessages.Count - 1].MessageId + 1;
             }
         }
 
