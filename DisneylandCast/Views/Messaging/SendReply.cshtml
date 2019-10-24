@@ -1,0 +1,14 @@
+﻿@model String
+
+@{
+    Layout = "_MessagingLayout";
+    ViewData["Title"] = "Send Reply";
+}
+
+<div class="card container text-center">
+    <form method="post">
+        <label for="replyText">Type your reply</label>
+        <input class="form-control" name="replyText" />
+        <input class="btn btn-primary" type="submit" value="Send Reply" />
+    </form>
+</div>

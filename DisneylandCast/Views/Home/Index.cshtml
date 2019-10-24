@@ -1,30 +1,18 @@
-﻿@{ 
-    Layout = null;
+﻿@{
+    ViewData["Title"] = "Home"; 
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Home</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-</head>
-<body>
-    <nav class="navbar navbar-expand-sm bg-info">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link text-light" asp-action="Index">Home</a></li>
-            <li class="nav-item"><a class="nav-link text-light" asp-action="History">History</a></li>
-            <li class="nav-item"><a class="nav-link text-light" asp-action="Messaging">Messaging</a></li>
-            <li class="nav-item"><a class="nav-link text-light" asp-action="About">About</a></li>
-        </ul>
-    </nav>
-    <div class="jumbotron text-center">
-        <h1>The cast of Disneyland</h1>
-        <h5>A site for theme park employees</h5>
+<div class="jumbotron text-center">
+    <h1>The cast of Disneyland</h1>
+    <h5>A site for theme park employees</h5>
+</div>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-3">
+        <div class="card container">
+            <div class="card-header text-center font-weight-bold">Character of the Day</div>
+            <div class="card-body text-center"><h1>@ViewBag.CharOfDay</h1></div>
+        </div>
     </div>
-    <p>
-        TODO: Add general site info here.
-    </p>
-</body>
-</html>
+    <div class="col-8"></div>
+</div>

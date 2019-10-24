@@ -1,0 +1,127 @@
+﻿@model DisneylandCast.Models.User
+
+@{
+    Layout = "_MessagingLayout";
+    ViewBag.MessagingLink = "ChooseUser";
+    ViewBag.Back = "<<< Back";
+    ViewData["Title"] = "Message List";
+}
+
+<div class="jumbotron">
+    <h1 class="text-center">@Model.Name's Messages</h1>
+</div>
+<div class="row">
+    <div class="card container bg-light col-6">
+        <div class="card-header">
+            <h3 class="text-center">Received Messages</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.ReceivedMessages.Count == 0)
+            {
+                <h4 class="text-center">You haven't recieved any messages.</h4>
+            }
+            else
+            {
+                foreach (Message m in Model.ReceivedMessages)
+                {
+                    string style = "";
+                    if (m.Important) { style = "bg-danger"; }
+                    <div class="card container">
+                        <div class="card-header @style">
+                            From: @m.Sender
+                            <div class="text-right">@m.Time.ToString()</div>
+                        </div>
+                        <div class="card-body">
+                            @m.MessageText
+                        </div>
+                        <div class="card-footer bg-white">
+                            @for (int i = 0; i < m.Replies.Count; i++)
+                            {
+                                <div class="card container">
+                                    <div class="card-header">
+                                        @{
+                                            string rNum = "";
+                                            for (int j = 0; j <= i; j++)
+                                            {
+                                                rNum += "RE:";
+                                            }
+                                        }
+                                        @rNum@m.Sender
+                                        <div class="text-right">@m.Replies[i].Time.ToString()</div>
+                                    </div>
+                                    <div class="card-body">
+                                        @m.Replies[i].ReplyText
+                                    </div>
+                                </div>
+                            }
+                            <a class="btn btn-sm btn-primary" asp-action="SendReply"
+                               asp-route-messageId="@m.MessageId.ToString()"
+                               asp-route-sent="false">Reply</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="card container bg-light col-6">
+        <div class="card-header">
+            <h3 class="text-center">Sent Messages</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.SentMessages.Count == 0)
+            {
+                <h4 class="text-center">You haven't sent any messages.</h4>
+            }
+            else
+            {
+                foreach (Message m in Model.SentMessages)
+                {
+                    string style = "";
+                    if (m.Important) { style = "bg-danger"; }
+                    <div class="card container">
+                        <div class="card-header @style">
+                            To: @m.Receiver
+                            <div class="text-right">@m.Time.ToString()</div>
+                        </div>
+                        <div class="card-body">
+                            @m.MessageText
+                        </div>
+                        @if (m.Replies.Count > 0)
+                        {
+                            <div class="card-footer bg-white">
+                                @for (int i = 0; i < m.Replies.Count; i++)
+                                {
+                                    <div class="card container">
+                                        <div class="card-header">
+                                            @{
+                                                string rNum = "";
+                                                for (int j = 0; j <= i; j++)
+                                                {
+                                                    rNum += "RE:";
+                                                }
+                                            }
+                                            @rNum@m.Sender
+                                            <div class="text-right">@m.Replies[i].Time.ToString()</div>
+                                        </div>
+                                        <div class="card-body">
+                                            @m.Replies[i].ReplyText
+                                        </div>
+                                        @if (i == m.Replies.Count - 1)
+                                        {
+                                            <div class="card-footer bg-white">
+                                                <a class="btn btn-sm btn-primary" asp-action="SendReply"
+                                                   asp-route-messageId="@m.MessageId.ToString()"
+                                                   asp-route-sent="true">Reply</a>
+                                            </div>
+                                        }
+
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

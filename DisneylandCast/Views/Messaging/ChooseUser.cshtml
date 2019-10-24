@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "_MessagingLayout";
+    ViewBag.MessagingLink = "Messaging";
+    ViewBag.Back = "<<< Back";
+    ViewData["Title"] = "Choose User";
+}
+
+<div class="card container text-center">
+    <form asp-action="ChooseUser" method="post">
+        <div class="form-group">
+            <label>Which user's messages would you like to view?</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">@@</span>
+                </div>
+                <input class="form-control" name="username" />
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">Confirm</button>
+        </div>
+    </form>
+</div>

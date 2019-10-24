@@ -1,38 +1,25 @@
 ﻿@model List<Location>
 
 @{
-    Layout = null;
+    Layout = "_AboutLayout";
+    ViewBag.AboutLink = "About";
+    ViewBag.Back = "<<< Back";
+    ViewData["Title"] = "Locations";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Locations</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-</head>
-<body>
-    <nav class="navbar navbar-expand-sm bg-info">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link text-light" asp-action="About"><<< Back</a></li>
-        </ul>
-    </nav>
-    <h1 class="container text-center">Here's some notable locations around the park.</h1>
-    <table class="container">
+<h1 class="container text-center">Here's some notable locations around the park.</h1>
+<table class="container">
+    <tr>
+        <th class="text-center">Name</th>
+        <th class="text-center">About</th>
+        <th class="text-center">Link to more Info</th>
+    </tr>
+    @foreach (Location l in Model)
+    {
         <tr>
-            <th class="text-center">Name</th>
-            <th class="text-center">About</th>
-            <th class="text-center">Link to more Info</th>
+            <td>@l.Name</td>
+            <td>@l.Info</td>
+            <td><a class="btn btn-sm btn-primary" href="@l.Link">More</a></td>
         </tr>
-        @foreach (Location l in Model)
-        {
-            <tr>
-                <td>@l.Name</td>
-                <td>@l.Info</td>
-                <td><a class="btn btn-sm btn-primary" href="@l.Link">More</a></td>
-            </tr>
-        }
-    </table>
-</body>
-</html>
+    }
+</table>
