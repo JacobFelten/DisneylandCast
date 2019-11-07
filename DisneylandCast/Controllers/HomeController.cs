@@ -18,7 +18,12 @@ namespace DisneylandCast.Controllers
             return View();
         }
 
-        public ViewResult History()
+        public ContentResult CharOfDay(string content)
+        {
+            return Content(content);
+        }
+
+        public IActionResult History()
         {
             return View();
         }
@@ -26,6 +31,11 @@ namespace DisneylandCast.Controllers
         public ViewResult About()
         {
             return View();
+        }
+
+        public NoContentResult Unfinished()
+        {
+            return NoContent();
         }
 
         public ViewResult Locations()

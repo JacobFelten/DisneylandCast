@@ -18,7 +18,7 @@ namespace DisneylandCast.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ViewResult Messaging(Message message)
+        public RedirectToActionResult Messaging(Message message)
         {
             if (ModelState.IsValid)
             {
@@ -32,7 +32,7 @@ namespace DisneylandCast.Controllers
                 GenerateMessageId(message);
                 message.Time = DateTime.Now;
             }
-            return View();
+            return RedirectToAction("Messaging");
         }
 
         [HttpGet]
