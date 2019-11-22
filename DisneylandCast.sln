@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisneylandCast", "DisneylandCast\DisneylandCast.csproj", "{1A769B2C-725E-459F-B9E1-6D66A1578DC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DisneylandCast", "DisneylandCast\DisneylandCast.csproj", "{1A769B2C-725E-459F-B9E1-6D66A1578DC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisneylandCastTests", "DisneylandCastTests\DisneylandCastTests.csproj", "{F3D4B041-1D05-447B-85F0-F25E91A08C9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1A769B2C-725E-459F-B9E1-6D66A1578DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A769B2C-725E-459F-B9E1-6D66A1578DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A769B2C-725E-459F-B9E1-6D66A1578DC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3D4B041-1D05-447B-85F0-F25E91A08C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D4B041-1D05-447B-85F0-F25E91A08C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D4B041-1D05-447B-85F0-F25E91A08C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D4B041-1D05-447B-85F0-F25E91A08C9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

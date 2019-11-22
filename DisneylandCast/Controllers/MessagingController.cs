@@ -5,11 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DisneylandCast.Models;
 using System.Web;
+using DisneylandCast.Repositories;
 
 namespace DisneylandCast.Controllers
 {
     public class MessagingController : Controller
     {
+        IUserRepository repo;
+
+        public MessagingController(IUserRepository r)
+        {
+            repo = r;
+        }
+
         [HttpGet]
         public ViewResult Messaging()
         {
@@ -79,7 +87,7 @@ namespace DisneylandCast.Controllers
         private bool LookForUser(string username)
         {
             User user = null;
-            foreach (User u in Repository.Users)
+            foreach (User u in repo.Users)
             {
                 if (u.Name == username)
                     user = u;
@@ -87,7 +95,7 @@ namespace DisneylandCast.Controllers
             if (user == null)
             {
                 user = new User() { Name = username };
-                Repository.Users.Add(user);
+                repo.Users.Add(user);
                 return false;
             }
             else
@@ -97,7 +105,7 @@ namespace DisneylandCast.Controllers
         //Finds and returns a user from Repository by its name.
         private User GetUser(string username)
         {
-            foreach (User u in Repository.Users)
+            foreach (User u in repo.Users)
             {
                 if (u.Name == username)
                     return u;
@@ -108,7 +116,7 @@ namespace DisneylandCast.Controllers
         //Finds and returns a message from the users in the Repository by its id.
         private Message GetMessage(int id)
         {
-            foreach (User u in Repository.Users)
+            foreach (User u in repo.Users)
             {
                 foreach (Message m in u.AllMessages)
                 {
@@ -140,7 +148,7 @@ namespace DisneylandCast.Controllers
                 */
 
                 List<Message> allUserMessages = new List<Message>();
-                foreach (User u in Repository.Users)
+                foreach (User u in repo.Users)
                 {
                     foreach (Message m in u.AllMessages)
                     {
