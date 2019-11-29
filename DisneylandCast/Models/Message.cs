@@ -8,7 +8,6 @@ namespace DisneylandCast.Models
 {
     public class Message
     {
-        private int messageId;
         private bool sent;
         private DateTime time;
         private string sender;
@@ -17,11 +16,7 @@ namespace DisneylandCast.Models
         private bool important;
         private List<Reply> replies = new List<Reply>();
 
-        public int MessageId
-        {
-            get { return messageId; }
-            set { messageId = value; }
-        }
+        public int MessageID { get; set; }
 
         public bool Sent
         {

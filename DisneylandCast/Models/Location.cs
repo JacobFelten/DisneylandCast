@@ -7,6 +7,7 @@ namespace DisneylandCast.Models
 {
     public class Location
     {
+        public string LocationID { get; set; }
         public string Name { get; set; }
         public string Info { get; set; }
         public string Link { get; set; }

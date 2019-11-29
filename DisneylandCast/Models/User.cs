@@ -9,12 +9,13 @@ namespace DisneylandCast.Models
     {
         private List<Message> sentMessages = new List<Message>();
         private List<Message> receivedMessages = new List<Message>();
-        private string name;
         
+        public int UserID { get; set; }
         public List<Message> SentMessages { get { return sentMessages; } }
         public List<Message> ReceivedMessages { get { return receivedMessages; } }
         public string Name { get; set; }
 
+        /*
         public List<Message> AllMessages
         {
             get
@@ -27,5 +28,6 @@ namespace DisneylandCast.Models
                 return all;
             }
         }
+        */
     }
 }

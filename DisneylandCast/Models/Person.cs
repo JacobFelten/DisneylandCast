@@ -7,6 +7,7 @@ namespace DisneylandCast.Models
 {
     public class Person
     {
+        public string PersonID { get; set; }
         public string Name { get; set; }
         public string Username { get; set; }
         public string Bio { get; set; }

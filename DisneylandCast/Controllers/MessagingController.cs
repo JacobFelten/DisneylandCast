@@ -30,15 +30,15 @@ namespace DisneylandCast.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user;
+                message.Time = DateTime.Now;
                 LookForUser(message.Sender);
-                user = GetUser(message.Sender);
-                user.SentMessages.Add(message);
+                User user = GetUser(message.Sender);
+                //user.SentMessages.Add(message);
+                repo.AddSentMessage(user, message);
                 LookForUser(message.Receiver);
                 user = GetUser(message.Receiver);
-                user.ReceivedMessages.Add(message);
-                GenerateMessageId(message);
-                message.Time = DateTime.Now;
+                //user.ReceivedMessages.Add(message);
+                repo.AddReceivedMessage(user, message);
             }
             return RedirectToAction("Messaging");
         }
@@ -52,9 +52,8 @@ namespace DisneylandCast.Controllers
         [HttpPost]
         public ViewResult ChooseUser(string username)
         {
-            User user;
             LookForUser(username);
-            user = GetUser(username);
+            User user = GetUser(username);
             SortMessagesAndReplies(user);
             return View("MessageList", user);
         }
@@ -72,7 +71,8 @@ namespace DisneylandCast.Controllers
             Reply reply = new Reply { ReplyText = replyText };
             reply.Time = DateTime.Now;
             Message message = GetMessage(int.Parse(messageId));
-            message.Replies.Add(reply);
+            //message.Replies.Add(reply);
+            repo.AddReply(message, reply);
             User user;
             if (message.Sent)
                 user = GetUser(message.Sender);
@@ -95,7 +95,8 @@ namespace DisneylandCast.Controllers
             if (user == null)
             {
                 user = new User() { Name = username };
-                repo.Users.Add(user);
+                //repo.Users.Add(user);
+                repo.AddUser(user);
                 return false;
             }
             else
@@ -118,9 +119,9 @@ namespace DisneylandCast.Controllers
         {
             foreach (User u in repo.Users)
             {
-                foreach (Message m in u.AllMessages)
+                foreach (Message m in GetAllMessagesFromUser(u))
                 {
-                    if (m.MessageId == id)
+                    if (m.MessageID == id)
                         return m;
                 }
             }
@@ -129,12 +130,13 @@ namespace DisneylandCast.Controllers
 
         //Generates a unique id int for the messageID property of the
         //message parameter if it doesn't alread have one
+        /*
         private void GenerateMessageId(Message message)
         {
             if (message.MessageId == 0)
             {
                 //Below was the old logic which caused errors
-                /*
+                
                 int id = 0;
                 foreach (User u in Repository.Users)
                 {
@@ -145,12 +147,12 @@ namespace DisneylandCast.Controllers
                     }
                 }
                 message.MessageId = id;
-                */
+                
 
                 List<Message> allUserMessages = new List<Message>();
                 foreach (User u in repo.Users)
                 {
-                    foreach (Message m in u.AllMessages)
+                    foreach (Message m in GetAllMessagesFromUser(u))
                     {
                         if (!allUserMessages.Contains(m))
                             allUserMessages.Add(m);
@@ -160,16 +162,27 @@ namespace DisneylandCast.Controllers
                 message.MessageId = allUserMessages[allUserMessages.Count - 1].MessageId + 1;
             }
         }
+        */
 
         //Sorts all of a user's messages and replies by it's time property
         private void SortMessagesAndReplies(User user)
         {
-            foreach (Message m in user.AllMessages)
+            foreach (Message m in GetAllMessagesFromUser(user))
             {
                 m.Replies.Sort((r1, r2) => r1.Time.CompareTo(r2.Time));
             }
             user.ReceivedMessages.Sort((m1, m2) => m1.Time.CompareTo(m2.Time));
             user.SentMessages.Sort((m1, m2) => m1.Time.CompareTo(m2.Time));
+        }
+
+        private List<Message> GetAllMessagesFromUser(User u)
+        {
+            List<Message> all = new List<Message>();
+            foreach (Message m in u.SentMessages)
+                all.Add(m);
+            foreach (Message m in u.ReceivedMessages)
+                all.Add(m);
+            return all;
         }
     }
 }

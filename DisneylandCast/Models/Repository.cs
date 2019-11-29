@@ -7,6 +7,8 @@ namespace DisneylandCast.Models
 {
     public static class Repository
     {
+        //How I stored people and locations before EF and SeedData
+        /*
         private static List<Person> people = new List<Person>();
         private static List<Location> locations = new List<Location>();
 
@@ -93,5 +95,6 @@ namespace DisneylandCast.Models
                 Link = "https://publicaffairs.disneyland.com/community/ambassador-program/"
             });
         }
+        */
     }
 }

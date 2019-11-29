@@ -47,7 +47,8 @@ namespace DisneylandCastTests
             Assert.Single(repo.Users);
             Assert.Equal(user, repo.Users[0]);
             Assert.Equal("Jack", user.Name);
-            Assert.Empty(user.AllMessages);
+            Assert.Empty(user.SentMessages);
+            Assert.Empty(user.ReceivedMessages);
         }
 
         [Fact]
@@ -58,6 +59,7 @@ namespace DisneylandCastTests
             var controller = new MessagingController(repo);
             var message = new Message
             {
+                MessageID = 1,
                 Sender = "Jack",
                 Receiver = "Jane",
                 MessageText = "How's it going?",

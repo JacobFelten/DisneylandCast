@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DisneylandCast.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace DisneylandCast
 {
@@ -35,6 +37,9 @@ namespace DisneylandCast
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
+                Configuration["ConnectionStrings:SanMsSqlConnection"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +66,8 @@ namespace DisneylandCast
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            SeedData.Seed(app);
         }
     }
 }

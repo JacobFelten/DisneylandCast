@@ -55,7 +55,7 @@
                                 </div>
                             }
                             <a class="btn btn-sm btn-primary" asp-action="SendReply"
-                               asp-route-messageId="@m.MessageId.ToString()"
+                               asp-route-messageId="@m.MessageID.ToString()"
                                asp-route-sent="false">Reply</a>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                                         {
                                             <div class="card-footer bg-white">
                                                 <a class="btn btn-sm btn-primary" asp-action="SendReply"
-                                                   asp-route-messageId="@m.MessageId.ToString()"
+                                                   asp-route-messageId="@m.MessageID.ToString()"
                                                    asp-route-sent="true">Reply</a>
                                             </div>
                                         }
